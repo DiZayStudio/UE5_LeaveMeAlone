@@ -7,8 +7,10 @@
 #include "LMADefaultCharacter.generated.h"
 
 
+class ULMAHealthComponent;
 class UCameraComponent;
 class USpringArmComponent;
+
 
 UCLASS()
 class LEAVEMEALONE_API ALMADefaultCharacter : public ACharacter
@@ -18,9 +20,6 @@ class LEAVEMEALONE_API ALMADefaultCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	ALMADefaultCharacter();
-
-
-
 
 protected:
 	// Called when the game starts or when spawned
@@ -36,8 +35,11 @@ protected:
 	UMaterialInterface* CursorMaterial = nullptr;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cursor")
 	FVector CursorSize = FVector(10.0f, 20.0f, 20.0f);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float Smoot = 50.0f;
 
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components|Health")
+	ULMAHealthComponent* HealthComponent;
 
 public:	
 	// Called every frame
@@ -55,6 +57,7 @@ private:
 	float ArmLengthMin = 800.0f;
 	float ArmLengthMax = 1400.0f;
 
+public:
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);

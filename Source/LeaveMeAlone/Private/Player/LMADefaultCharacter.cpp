@@ -10,6 +10,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 
+
+
 // Sets default values
 ALMADefaultCharacter::ALMADefaultCharacter()
 {
@@ -32,6 +34,8 @@ ALMADefaultCharacter::ALMADefaultCharacter()
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
+
+	HealthComponent = CreateDefaultSubobject<ULMAHealthComponent>("HealthComponent");
 }
 
 // Called when the game starts or when spawned
@@ -70,6 +74,7 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAxis("MoveForward", this, &ALMADefaultCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ALMADefaultCharacter::MoveRight);
+
 	PlayerInputComponent->BindAxis("Zoom", this, &ALMADefaultCharacter::Zoom);
 }
 
@@ -84,13 +89,11 @@ void ALMADefaultCharacter::MoveRight(float Value)
 
 void ALMADefaultCharacter::Zoom(float Value)
 {
-	ArmLength +=  Value * 10;
-
-	if (ArmLength > ArmLengthMax)
-		ArmLength = ArmLengthMax;
-	if (ArmLength < ArmLengthMin)
-		ArmLength = ArmLengthMin;
+	UE_LOG(LogTemp, Display, TEXT("Zoom %f"), Value);
 	
-	SpringArmComponent->TargetArmLength = ArmLength;
-//	SpringArmComponent->
+	float& ArmLen = SpringArmComponent->TargetArmLength;
+
+	if (ArmLen + Value * Smoot <= ArmLengthMax && ArmLen + Value * Smoot >= ArmLengthMin)
+		ArmLen += Value * Smoot;
+
 }
