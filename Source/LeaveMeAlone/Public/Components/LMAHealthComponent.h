@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "LMAHealthComponent.generated.h"
-
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class LEAVEMEALONE_API ULMAHealthComponent : public UActorComponent
@@ -31,7 +31,22 @@ public:
 	UFUNCTION(BlueprintCallable)
 	float GetHealth() const { return Health; }
 
+	DECLARE_MULTICAST_DELEGATE(FOnDeath)
+
+	UFUNCTION(BlueprintCallable)
+	bool IsDead() const;
+
+	FOnDeath OnDeath;
+
+	UFUNCTION()
+	void OnTakeAnyDamage(
+		AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
+
+	DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float);
+	FOnHealthChanged OnHealthChanged;
+
 private:
 	float Health = 0.0f;
+
 
 };

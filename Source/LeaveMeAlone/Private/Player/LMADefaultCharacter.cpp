@@ -6,6 +6,7 @@
 
 #include "Components/DecalComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/LMAHealthComponent.h"
 
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -36,6 +37,11 @@ ALMADefaultCharacter::ALMADefaultCharacter()
 	bUseControllerRotationRoll = false;
 
 	HealthComponent = CreateDefaultSubobject<ULMAHealthComponent>("HealthComponent");
+	HealthComponent->OnDeath.AddUObject(this, &ALMADefaultCharacter::OnDeath);
+
+	OnHealthChanged(HealthComponent->GetHealth());
+	HealthComponent->OnHealthChanged.AddUObject(this, &ALMADefaultCharacter::OnHealthChanged);
+
 }
 
 // Called when the game starts or when spawned
@@ -53,7 +59,15 @@ void ALMADefaultCharacter::BeginPlay()
 void ALMADefaultCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (!(HealthComponent->IsDead()))
+	{
+		RotationPlayerOnCursor();
+	}
+}
 
+
+void ALMADefaultCharacter::RotationPlayerOnCursor()
+{
 	APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	if (PC)
 	{
@@ -68,6 +82,8 @@ void ALMADefaultCharacter::Tick(float DeltaTime)
 	}
 }
 
+
+
 // Called to bind functionality to input
 void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -76,6 +92,8 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAxis("MoveRight", this, &ALMADefaultCharacter::MoveRight);
 
 	PlayerInputComponent->BindAxis("Zoom", this, &ALMADefaultCharacter::Zoom);
+
+
 }
 
 void ALMADefaultCharacter::MoveForward(float Value)
@@ -95,5 +113,21 @@ void ALMADefaultCharacter::Zoom(float Value)
 
 	if (ArmLen + Value * Smoot <= ArmLengthMax && ArmLen + Value * Smoot >= ArmLengthMin)
 		ArmLen += Value * Smoot;
+}
 
+void ALMADefaultCharacter::OnDeath()
+{
+	CurrentCursor->DestroyRenderState_Concurrent();
+	PlayAnimMontage(DeathMontage);
+	GetCharacterMovement()->DisableMovement();
+	SetLifeSpan(5.0f);
+	if (Controller)
+	{
+		Controller->ChangeState(NAME_Spectating);
+	}
+}
+
+void ALMADefaultCharacter::OnHealthChanged(float NewHealth)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, FString::Printf(TEXT("Health = %f"), NewHealth));
 }
