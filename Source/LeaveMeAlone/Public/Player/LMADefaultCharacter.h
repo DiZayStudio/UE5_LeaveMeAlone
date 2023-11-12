@@ -7,9 +7,9 @@
 #include "LMADefaultCharacter.generated.h"
 
 
-class ULMAHealthComponent;
 class UCameraComponent;
 class USpringArmComponent;
+class ULMAHealthComponent;
 class UAnimMontage;
 
 UCLASS()
@@ -44,14 +44,17 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	UAnimMontage* DeathMontage;
 
-	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	float WalkSpeed = 300.0f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	float SprintSpeed = 600.0f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	float Endurance = 100.0f;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	//UFUNCTION(BlueprintCallable)
+	//void StartSprint();
+	//UFUNCTION(BlueprintCallable)
+	//void StopSprint();
 
 private:
 
@@ -62,12 +65,24 @@ private:
 	float ArmLengthMin = 800.0f;
 	float ArmLengthMax = 1400.0f;
 
+	void OnDeath();
+	void RotationPlayerOnCursor();
+
 public:
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	// Called to bind functionality to input
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UFUNCTION()
+	ULMAHealthComponent* GetHealthComponent() const { return HealthComponent; }
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 	void Zoom(float Value);
-	void OnDeath();
+
 	void OnHealthChanged(float NewHealth);
-	void RotationPlayerOnCursor();
+
+
 };

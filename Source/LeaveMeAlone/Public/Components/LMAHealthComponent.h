@@ -24,6 +24,8 @@ protected:
 	float MaxHealth = 100.0f;
 
 
+
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
@@ -32,11 +34,11 @@ public:
 	float GetHealth() const { return Health; }
 
 	DECLARE_MULTICAST_DELEGATE(FOnDeath)
+	FOnDeath OnDeath;
 
 	UFUNCTION(BlueprintCallable)
 	bool IsDead() const;
-
-	FOnDeath OnDeath;
+	
 
 	UFUNCTION()
 	void OnTakeAnyDamage(
@@ -44,6 +46,9 @@ public:
 
 	DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float);
 	FOnHealthChanged OnHealthChanged;
+
+	bool AddHealth(float NewHealth);
+	bool IsHealthFull() const;
 
 private:
 	float Health = 0.0f;
