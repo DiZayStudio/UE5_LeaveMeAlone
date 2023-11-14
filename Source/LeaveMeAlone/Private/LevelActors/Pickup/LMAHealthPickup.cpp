@@ -2,13 +2,18 @@
 
 
 #include "LevelActors/Pickup/LMAHealthPickup.h"
+#include "Components/LMAHealthComponent.h"
+#include "Components/SphereComponent.h"
+#include "Player/LMADefaultCharacter.h"
 
 // Sets default values
 ALMAHealthPickup::ALMAHealthPickup()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
 	SphereComponent = CreateDefaultSubobject<USphereComponent>("SphereComponent");
+	SphereComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	SphereComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 	SetRootComponent(SphereComponent);
 }
@@ -24,7 +29,6 @@ void ALMAHealthPickup::BeginPlay()
 void ALMAHealthPickup::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void ALMAHealthPickup::PickupWasTaken()
@@ -41,13 +45,10 @@ void ALMAHealthPickup::RespawnPickup()
 }
 bool ALMAHealthPickup::GivePickup(ALMADefaultCharacter* Character)
 {
-	//const auto HealthComponent = Character->GetHealthComponent();
-	//if (!HealthComponent) return false;
+	const auto HealthComponent = Character->GetHealthComponent();
+	if (!HealthComponent) return false;
 
-	//HealthComponent->AddHealth(HealthFromPickup);
-	//return HealthComponent;
-	return true;
-
+	return HealthComponent->AddHealth(HealthFromPickup);
 }
 void ALMAHealthPickup::NotifyActorBeginOverlap(AActor* OtherActor)
 {

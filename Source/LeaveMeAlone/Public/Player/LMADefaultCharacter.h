@@ -21,6 +21,9 @@ public:
 	// Sets default values for this character's properties
 	ALMADefaultCharacter();
 
+	UFUNCTION()
+	ULMAHealthComponent* GetHealthComponent() const { return HealthComponent; }
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -47,14 +50,20 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	float WalkSpeed = 300.0f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-	float SprintSpeed = 600.0f;
+	float SprintSpeed = 700.0f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-	float Endurance = 100.0f;
+	float Stamina = 100.0f;
+	float StaminaMax = 100.0f;
 
-	//UFUNCTION(BlueprintCallable)
-	//void StartSprint();
-	//UFUNCTION(BlueprintCallable)
-	//void StopSprint();
+	UPROPERTY(BlueprintReadWrite)
+	bool isSprinting = false;
+	UFUNCTION(BlueprintCallable)
+	void SprintStart();
+	UFUNCTION(BlueprintCallable)
+	void SprintStop();
+
+	void DrainStamina();
+	void RegenStamina();
 
 private:
 
@@ -66,6 +75,7 @@ private:
 	float ArmLengthMax = 1400.0f;
 
 	void OnDeath();
+	void OnHealthChanged(float NewHealth);
 	void RotationPlayerOnCursor();
 
 public:
@@ -75,14 +85,10 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UFUNCTION()
-	ULMAHealthComponent* GetHealthComponent() const { return HealthComponent; }
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 	void Zoom(float Value);
-
-	void OnHealthChanged(float NewHealth);
 
 
 };

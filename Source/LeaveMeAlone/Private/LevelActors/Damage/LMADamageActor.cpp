@@ -2,7 +2,9 @@
 
 
 #include "LevelActors/Damage/LMADamageActor.h"
-#include <Kismet/GameplayStatics.h>
+#include "Components/SphereComponent.h"
+#include "GameFramework/Character.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -33,6 +35,6 @@ void ALMADamageActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-//	UGameplayStatics::ApplyRadialDamage(GetWorld(), Damage, GetActorLocation(), SphereRadius, nullptr, {}, this, nullptr, false);
+	UGameplayStatics::ApplyRadialDamage(GetWorld(), Damage, GetActorLocation(), SphereRadius, nullptr, {}, this, nullptr, false);
 }
 

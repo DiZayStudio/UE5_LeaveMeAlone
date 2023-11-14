@@ -2,14 +2,14 @@
 
 #include "Player/LMADefaultCharacter.h"
 #include "Camera/CameraComponent.h"
-#include "GameFramework/SpringArmComponent.h"
-
 #include "Components/DecalComponent.h"
 #include "Components/InputComponent.h"
-#include "Components/LMAHealthComponent.h"
-
+#include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Components/LMAHealthComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Engine/Engine.h"
 
 
 
@@ -63,6 +63,16 @@ void ALMADefaultCharacter::Tick(float DeltaTime)
 	{
 		RotationPlayerOnCursor();
 	}
+
+	if (isSprinting)
+	{
+		DrainStamina();
+	}
+	else
+	{
+		RegenStamina();
+	}
+		
 }
 
 
@@ -91,6 +101,9 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAxis("MoveRight", this, &ALMADefaultCharacter::MoveRight);
 
 	PlayerInputComponent->BindAxis("Zoom", this, &ALMADefaultCharacter::Zoom);
+	
+	PlayerInputComponent->BindAction("Sprint",IE_Pressed, this, &ALMADefaultCharacter::SprintStart);
+	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &ALMADefaultCharacter::SprintStop);
 }
 
 void ALMADefaultCharacter::MoveForward(float Value)
@@ -129,11 +142,40 @@ void ALMADefaultCharacter::OnHealthChanged(float NewHealth)
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, FString::Printf(TEXT("Health = %f"), NewHealth));
 }
 
-//void ALMADefaultCharacter::StartSprint()
-//{
-//	//if (Endurance > 0)
-//	//	CharacterMovement.
-//}
-//void ALMADefaultCharacter::StopSprint()
-//{
-//}
+void ALMADefaultCharacter::SprintStart()
+{
+	if (Stamina > 0)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+	}
+	isSprinting = true;
+}
+void ALMADefaultCharacter::SprintStop() 
+{
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+	isSprinting = false;
+}
+
+void ALMADefaultCharacter::DrainStamina() {
+	if (Stamina > 0.0f)
+	{
+		Stamina -= 0.2f;
+	}
+	
+	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, FString::Printf(TEXT("Stamina = %f"), Stamina));
+
+	if (Stamina <= 0)
+	{
+		SprintStop();
+	}
+	
+}
+
+void ALMADefaultCharacter::RegenStamina() {
+	if (Stamina < StaminaMax)
+	{
+		Stamina += 0.4f;
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, FString::Printf(TEXT("Stamina = %f"), Stamina));
+	}
+	
+}

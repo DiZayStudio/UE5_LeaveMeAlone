@@ -3,12 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include <Components/SphereComponent.h>
-#include <Player/LMADefaultCharacter.h>
 #include "GameFramework/Actor.h"
 #include "LMAHealthPickup.generated.h"
 
-
+class USphereComponent;
+class ALMADefaultCharacter;
 
 UCLASS()
 class LEAVEMEALONE_API ALMAHealthPickup : public AActor
@@ -22,6 +21,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
 	UPROPERTY(VisibleAnywhere, Category = "Pickup")
 	USphereComponent* SphereComponent;
 
@@ -30,6 +30,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup", meta = (ClampMin = 5.0f, ClampMax = 100.0f))
 	float HealthFromPickup = 100.0f;
+	
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 
 public:	
