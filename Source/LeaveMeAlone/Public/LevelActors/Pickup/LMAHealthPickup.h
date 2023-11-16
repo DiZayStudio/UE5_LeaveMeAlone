@@ -10,7 +10,7 @@ class USphereComponent;
 class ALMADefaultCharacter;
 
 UCLASS()
-class LEAVEMEALONE_API ALMAHealthPickup : public AActor
+class ALMAHealthPickup : public AActor
 {
 	GENERATED_BODY()
 	

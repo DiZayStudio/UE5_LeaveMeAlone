@@ -7,13 +7,16 @@
 #include "LMADefaultCharacter.generated.h"
 
 
+class ULMAWeaponComponent;
 class UCameraComponent;
 class USpringArmComponent;
 class ULMAHealthComponent;
+class ULMAWeaponComponent;
 class UAnimMontage;
 
+
 UCLASS()
-class LEAVEMEALONE_API ALMADefaultCharacter : public ACharacter
+class ALMADefaultCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -65,6 +68,10 @@ protected:
 	void DrainStamina();
 	void RegenStamina();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	ULMAWeaponComponent* WeaponComponent;
+
+
 private:
 
 	float YRotation = -75.0f;
@@ -77,6 +84,8 @@ private:
 	void OnDeath();
 	void OnHealthChanged(float NewHealth);
 	void RotationPlayerOnCursor();
+	void MoveForward(float Value);
+	void MoveRight(float Value);
 
 public:
 	// Called every frame
@@ -86,8 +95,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
-	void MoveForward(float Value);
-	void MoveRight(float Value);
+
 	void Zoom(float Value);
 
 

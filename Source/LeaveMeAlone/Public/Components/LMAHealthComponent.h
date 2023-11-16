@@ -11,10 +11,9 @@ DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float);
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class LEAVEMEALONE_API ULMAHealthComponent : public UActorComponent
+class ULMAHealthComponent : public UActorComponent
 {
 	GENERATED_BODY()
-
 
 protected:
 	// Called when the game starts
@@ -37,14 +36,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool IsDead() const;
 	
-	UFUNCTION()
-	void OnTakeAnyDamage(
-		AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
-
 	bool AddHealth(float NewHealth);
 	bool IsHealthFull() const;
 
-private:
+
+	UFUNCTION(BlueprintCallable)
+	void OnTakeAnyDamage(
+		AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
+	
 	float Health = 0.0f;
 
 

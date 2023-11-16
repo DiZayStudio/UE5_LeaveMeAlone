@@ -9,7 +9,7 @@ class USphereComponent;
 class UStaticMeshComponent;
 
 UCLASS()
-class LEAVEMEALONE_API ALMADamageActor : public AActor
+class ALMADamageActor : public AActor
 {
 	GENERATED_BODY()
 	
@@ -24,7 +24,7 @@ public:
 	UStaticMeshComponent* StaticMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
-	float Damage = 1.0f;
+	float Damage = 2.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
 	float SphereRadius = 100.0f;

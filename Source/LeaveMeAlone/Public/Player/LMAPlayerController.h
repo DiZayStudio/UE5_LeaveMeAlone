@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class LEAVEMEALONE_API ALMAPlayerController : public APlayerController
+class ALMAPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
