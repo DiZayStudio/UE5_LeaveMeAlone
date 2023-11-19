@@ -19,6 +19,10 @@ public:
 	ULMAWeaponComponent();
 	void Fire();
 	void Reload();
+	void SpawnWeapon();
+	void InitAnimNotify();
+
+	bool CanReload() const;
 
 protected:
 	// Called when the game starts
@@ -37,13 +41,7 @@ public:
 private:
 	UPROPERTY()
 	ALMABaseWeapon* Weapon = nullptr;
-
-	bool AnimReloading = false;
-
-	void SpawnWeapon();
-	void InitAnimNotify();
-
 	void OnNotifyReloadFinished(USkeletalMeshComponent* SkeletalMesh);
-	bool CanReload() const;
+	bool AnimReloading = false;
 };
  

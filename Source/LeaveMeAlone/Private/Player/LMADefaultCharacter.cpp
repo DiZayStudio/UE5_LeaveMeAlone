@@ -1,7 +1,6 @@
 // LeaveMeAlone Game by Netologiya. All RightsReserved.
 
 #include "Player/LMADefaultCharacter.h"
-#include "Components/LMAWeaponComponen.h"
 #include "Camera/CameraComponent.h"
 #include "Components/DecalComponent.h"
 #include "Components/InputComponent.h"
@@ -11,6 +10,7 @@
 #include "Components/LMAHealthComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Engine/Engine.h"
+#include "Components/LMAWeaponComponent.h"
 
 
 

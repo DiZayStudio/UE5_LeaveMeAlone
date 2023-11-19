@@ -84,13 +84,15 @@ void ULMAWeaponComponent::OnNotifyReloadFinished(USkeletalMeshComponent* Skeleta
 
 bool ULMAWeaponComponent::CanReload() const
 {
-	return !AnimReloading; //	&&Weapon->CanReload();
+	return !AnimReloading;	//&&Weapon->CanReload();
 }
 
 void ULMAWeaponComponent::Reload()
 {
 	if (!CanReload())
 		return;
+	Weapon->ChangeClip();
+
 	AnimReloading = true;
 	ACharacter* Character = Cast<ACharacter>(GetOwner());
 	Character->PlayAnimMontage(ReloadMontage);

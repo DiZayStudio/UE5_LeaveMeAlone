@@ -35,6 +35,10 @@ public:
 
 	void Fire();
 	void Shoot();
+	void ChangeClip();
+	void DecrementBullets();
+	bool IsCurrentClipEmpty() const;
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -49,15 +53,14 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	FAmmoWeapon AmmoWeapon{30, 0, true};
 
-	void DecrementBullets();
-	bool IsCurrentClipEmpty() const;
-	void ChangeClip();
+
+
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-private:
+//private:
 	FAmmoWeapon CurrentAmmoWeapon;
 
 };
