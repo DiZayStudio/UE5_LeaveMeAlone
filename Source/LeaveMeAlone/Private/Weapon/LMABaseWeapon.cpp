@@ -63,7 +63,8 @@ void ALMABaseWeapon::DecrementBullets()
 	{
 		ChangeClip();
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan, FString::Printf(TEXT("Bullets: %f"), CurrentAmmoWeapon.Bullets));
+
+//	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan, FString::Printf(TEXT("Bullets: %f"), CurrentAmmoWeapon.Bullets));
 
 }
 

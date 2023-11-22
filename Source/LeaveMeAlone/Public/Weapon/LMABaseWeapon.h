@@ -11,14 +11,14 @@ class USkeletalMeshComponent;
 USTRUCT(BlueprintType)
 struct FAmmoWeapon
 {
-	GENERATED_BODY()
-
+	GENERATED_USTRUCT_BODY()
+	// количество патронов
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	int32 Bullets;
-
+	// количество обойм
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	int32 Clips;
-
+	// бесконечные обоймы
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	bool Infinite;
 };
@@ -34,11 +34,8 @@ public:
 	ALMABaseWeapon();
 
 	void Fire();
-	void Shoot();
 	void ChangeClip();
-	void DecrementBullets();
-	bool IsCurrentClipEmpty() const;
-
+	FAmmoWeapon GetCurrentAmmoWeapon() const { return CurrentAmmoWeapon; }
 
 protected:
 	// Called when the game starts or when spawned
@@ -53,14 +50,18 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	FAmmoWeapon AmmoWeapon{30, 0, true};
 
+	void Shoot();
+	void DecrementBullets();
+	bool IsCurrentClipEmpty() const;
 
+	
 
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-//private:
+private:
 	FAmmoWeapon CurrentAmmoWeapon;
 
 };

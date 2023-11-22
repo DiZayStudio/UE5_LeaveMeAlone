@@ -97,6 +97,4 @@ public:
 
 
 	void Zoom(float Value);
-
-
 };
