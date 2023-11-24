@@ -167,7 +167,7 @@ void ALMADefaultCharacter::DrainStamina() {
 		Stamina -= 0.2f;
 	}
 	
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, FString::Printf(TEXT("Stamina = %f"), Stamina));
+//	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, FString::Printf(TEXT("Stamina = %f"), Stamina));
 
 	if (Stamina <= 0)
 	{
@@ -180,7 +180,7 @@ void ALMADefaultCharacter::RegenStamina() {
 	if (Stamina < StaminaMax)
 	{
 		Stamina += 0.4f;
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, FString::Printf(TEXT("Stamina = %f"), Stamina));
+	//	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, FString::Printf(TEXT("Stamina = %f"), Stamina));
 	}
 	
 }
