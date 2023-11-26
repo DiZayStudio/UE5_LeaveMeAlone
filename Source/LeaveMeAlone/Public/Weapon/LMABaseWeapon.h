@@ -54,9 +54,6 @@ protected:
 	void DecrementBullets();
 	bool IsCurrentClipEmpty() const;
 
-	
-
-
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

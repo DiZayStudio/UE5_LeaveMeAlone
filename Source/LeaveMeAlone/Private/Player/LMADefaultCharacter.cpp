@@ -66,15 +66,7 @@ void ALMADefaultCharacter::Tick(float DeltaTime)
 		RotationPlayerOnCursor();
 	}
 
-	if (isSprinting)
-	{
-		DrainStamina();
-	}
-	else
-	{
-		RegenStamina();
-	}
-		
+	
 }
 
 
@@ -104,10 +96,8 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 	PlayerInputComponent->BindAxis("Zoom", this, &ALMADefaultCharacter::Zoom);
 	
-	PlayerInputComponent->BindAction("Sprint",IE_Pressed, this, &ALMADefaultCharacter::SprintStart);
-	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &ALMADefaultCharacter::SprintStop);
-
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, WeaponComponent, &ULMAWeaponComponent::Fire);
+//	PlayerInputComponent->BindAction("Fire", IE_Released, WeaponComponent, &ULMAWeaponComponent::Fire);
 	PlayerInputComponent->BindAction("Reload", IE_Pressed, WeaponComponent, &ULMAWeaponComponent::Reload);
 }
 
@@ -145,42 +135,4 @@ void ALMADefaultCharacter::OnDeath()
 void ALMADefaultCharacter::OnHealthChanged(float NewHealth)
 {
 //	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, FString::Printf(TEXT("Health = %f"), NewHealth));
-}
-
-void ALMADefaultCharacter::SprintStart()
-{
-	if (Stamina > 0)
-	{
-		GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
-	}
-	isSprinting = true;
-}
-void ALMADefaultCharacter::SprintStop() 
-{
-	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
-	isSprinting = false;
-}
-
-void ALMADefaultCharacter::DrainStamina() {
-	if (Stamina > 0.0f)
-	{
-		Stamina -= 0.2f;
-	}
-	
-//	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, FString::Printf(TEXT("Stamina = %f"), Stamina));
-
-	if (Stamina <= 0)
-	{
-		SprintStop();
-	}
-	
-}
-
-void ALMADefaultCharacter::RegenStamina() {
-	if (Stamina < StaminaMax)
-	{
-		Stamina += 0.4f;
-	//	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Blue, FString::Printf(TEXT("Stamina = %f"), Stamina));
-	}
-	
 }

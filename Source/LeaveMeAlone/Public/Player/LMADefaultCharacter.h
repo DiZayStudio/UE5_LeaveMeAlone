@@ -51,24 +51,6 @@ protected:
 	UAnimMontage* DeathMontage;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-	float WalkSpeed = 300.0f;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-	float SprintSpeed = 700.0f;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-	float Stamina = 100.0f;
-	float StaminaMax = 100.0f;
-
-	UPROPERTY(BlueprintReadWrite)
-	bool isSprinting = false;
-	UFUNCTION(BlueprintCallable)
-	void SprintStart();
-	UFUNCTION(BlueprintCallable)
-	void SprintStop();
-
-	void DrainStamina();
-	void RegenStamina();
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	ULMAWeaponComponent* WeaponComponent;
 
 
@@ -93,8 +75,6 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-
 
 	void Zoom(float Value);
 };

@@ -23,6 +23,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool GetCurrentWeaponAmmo(FAmmoWeapon& AmmoWeapon) const;
 
+	bool CanReload() const;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -33,21 +35,22 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 	UAnimMontage* ReloadMontage;
 
-
+	UPROPERTY()
+	ALMABaseWeapon* Weapon = nullptr;
+	void OnNotifyReloadFinished(USkeletalMeshComponent* SkeletalMesh);
+	bool AnimReloading = false;
+	void InitAnimNotify();
 
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
-	UPROPERTY()
-	ALMABaseWeapon* Weapon = nullptr;
-	void OnNotifyReloadFinished(USkeletalMeshComponent* SkeletalMesh);
-	bool AnimReloading = false;
+
 
 	void SpawnWeapon();
-	void InitAnimNotify();
 
-	bool CanReload() const;
+
+	
 };
  
