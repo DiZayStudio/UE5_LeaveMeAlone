@@ -8,6 +8,8 @@
 
 class USkeletalMeshComponent;
 
+DECLARE_MULTICAST_DELEGATE(FReloadDelegate);
+
 USTRUCT(BlueprintType)
 struct FAmmoWeapon
 {
@@ -34,8 +36,23 @@ public:
 	ALMABaseWeapon();
 
 	void Fire();
+	
 	void ChangeClip();
+
+	void AnimReload();
+
 	FAmmoWeapon GetCurrentAmmoWeapon() const { return CurrentAmmoWeapon; }
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+	FAmmoWeapon AmmoWeapon{30, 0, true};
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+	float FireRate = 0.1;
+
+	FTimerHandle FireDelayTimerHandle;
+	void Shoot();
+
+	FReloadDelegate ReloadDelegate;
 
 protected:
 	// Called when the game starts or when spawned
@@ -47,12 +64,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	float TraceDistance = 800.0f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-	FAmmoWeapon AmmoWeapon{30, 0, true};
-
-	void Shoot();
+	
 	void DecrementBullets();
 	bool IsCurrentClipEmpty() const;
+
 
 public:	
 	// Called every frame

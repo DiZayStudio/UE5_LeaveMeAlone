@@ -11,8 +11,6 @@ ULMAWeaponComponent::ULMAWeaponComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
 
 
@@ -23,7 +21,6 @@ void ULMAWeaponComponent::BeginPlay()
 
 	SpawnWeapon();
 	InitAnimNotify();
-	
 }
 
 
@@ -55,17 +52,34 @@ void ULMAWeaponComponent::SpawnWeapon()
 		{
 			FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
 			Weapon->AttachToComponent(Character->GetMesh(), AttachmentRules, "r_Weapon_Socket");
+
+		//	auto ReloadDelegate = Cast<ULMAWeaponComponent>(ReloadDelegate); 
+		//	ReloadDelegate->ALMABaseWeapon.AddUObject(this, ULMAWeaponComponent::ReloadDelegate);
 		}
 	}
 }
+
+void ULMAWeaponComponent::StartFire() {
+	isFirePressed = true;
+	FTimerDelegate TimerDelegate = FTimerDelegate::CreateUObject(this, &ULMAWeaponComponent::Fire);
+	GetWorld()->GetTimerManager().SetTimer(FireDelayTimerHandle, TimerDelegate, 0.1f, true);
+}
+
 
 void ULMAWeaponComponent::Fire()
 {
 	if (Weapon && !AnimReloading)
 	{
-		Weapon->Fire();
-	}
+		Weapon->Fire();		
+	}	
 }
+
+void ULMAWeaponComponent::StopFire()
+{
+	isFirePressed = false;
+	GetWorld()->GetTimerManager().ClearTimer(FireDelayTimerHandle);
+}
+
 void ULMAWeaponComponent::InitAnimNotify()
 {
 	if (!ReloadMontage)
@@ -94,8 +108,7 @@ void ULMAWeaponComponent::OnNotifyReloadFinished(USkeletalMeshComponent* Skeleta
 
 bool ULMAWeaponComponent::CanReload() const
 {
-	return !AnimReloading;
-	//&&Weapon->CanReload();
+	return !AnimReloading;	
 }
 
 void ULMAWeaponComponent::Reload()
@@ -108,3 +121,9 @@ void ULMAWeaponComponent::Reload()
 	ACharacter* Character = Cast<ACharacter>(GetOwner());
 	Character->PlayAnimMontage(ReloadMontage);
 }
+
+void ULMAWeaponComponent::ReloadDelegate() {
+	Reload();
+}
+
+		

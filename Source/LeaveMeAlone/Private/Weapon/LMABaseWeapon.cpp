@@ -27,12 +27,11 @@ void ALMABaseWeapon::BeginPlay()
 void ALMABaseWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void ALMABaseWeapon::Fire()
 {
-	Shoot();
+		Shoot();
 }
 
 void ALMABaseWeapon::Shoot()
@@ -48,7 +47,7 @@ void ALMABaseWeapon::Shoot()
 
 	if (HitResult.bBlockingHit)
 	{
-		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 3.0f, 24, FColor::Red, false, 1.0f);
+		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 3.0f, 24, FColor::Red, false, 0.2f, false);
 	}
 
 	DecrementBullets();
@@ -61,6 +60,7 @@ void ALMABaseWeapon::DecrementBullets()
 
 	if (IsCurrentClipEmpty())
 	{
+		ReloadDelegate.Broadcast();
 		ChangeClip();
 	}
 
@@ -73,8 +73,15 @@ bool ALMABaseWeapon::IsCurrentClipEmpty() const
 	return CurrentAmmoWeapon.Bullets == 0;
 }
 
+
 void ALMABaseWeapon::ChangeClip()
 {
+	//
+
 	CurrentAmmoWeapon.Bullets = AmmoWeapon.Bullets;
+}
+
+void ALMABaseWeapon::AnimReload() {
+
 }
 

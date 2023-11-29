@@ -3,11 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Weapon/LMABaseWeapon.h"
 #include "Components/ActorComponent.h"
 #include "LMAWeaponComponent.generated.h"
 
 class ALMABaseWeapon;
 class UAnimMontage;
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ULMAWeaponComponent : public UActorComponent
@@ -17,13 +19,24 @@ class ULMAWeaponComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	ULMAWeaponComponent();
-	void Fire();
-	void Reload();
+
 
 	UFUNCTION(BlueprintCallable)
 	bool GetCurrentWeaponAmmo(FAmmoWeapon& AmmoWeapon) const;
 
 	bool CanReload() const;
+
+	UFUNCTION(BlueprintCallable)
+	void Fire();
+	//UFUNCTION(BlueprintCallable)
+	void StartFire();
+	void StopFire();
+	UFUNCTION(BlueprintCallable)
+	void Reload();
+
+	void ReloadDelegate ();
+
+	FTimerHandle FireDelayTimerHandle;
 
 protected:
 	// Called when the game starts
@@ -38,8 +51,14 @@ protected:
 	UPROPERTY()
 	ALMABaseWeapon* Weapon = nullptr;
 	void OnNotifyReloadFinished(USkeletalMeshComponent* SkeletalMesh);
+
 	bool AnimReloading = false;
 	void InitAnimNotify();
+
+	UPROPERTY(VisibleAnywhere)
+	bool isFirePressed;
+
+	FReloadDelegate OnReloadDelegate;
 
 public:	
 	// Called every frame
@@ -47,10 +66,7 @@ public:
 
 private:
 
-
 	void SpawnWeapon();
 
-
-	
 };
  
