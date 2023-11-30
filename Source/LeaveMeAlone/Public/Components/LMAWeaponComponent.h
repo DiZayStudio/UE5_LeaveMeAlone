@@ -34,7 +34,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Reload();
 
-	void ReloadDelegate ();
+	void OnReload();
 
 	FTimerHandle FireDelayTimerHandle;
 
@@ -57,8 +57,6 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	bool isFirePressed;
-
-	FReloadDelegate OnReloadDelegate;
 
 public:	
 	// Called every frame

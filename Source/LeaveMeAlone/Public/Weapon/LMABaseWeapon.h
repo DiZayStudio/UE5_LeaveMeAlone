@@ -8,7 +8,7 @@
 
 class USkeletalMeshComponent;
 
-DECLARE_MULTICAST_DELEGATE(FReloadDelegate);
+DECLARE_MULTICAST_DELEGATE(FOnReload)
 
 USTRUCT(BlueprintType)
 struct FAmmoWeapon
@@ -52,7 +52,10 @@ public:
 	FTimerHandle FireDelayTimerHandle;
 	void Shoot();
 
-	FReloadDelegate ReloadDelegate;
+	FOnReload OnReload;
+	bool IsCurrentClipEmpty() const;
+	bool IsCurrentClipFull() const;
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -66,7 +69,6 @@ protected:
 
 	
 	void DecrementBullets();
-	bool IsCurrentClipEmpty() const;
 
 
 public:	

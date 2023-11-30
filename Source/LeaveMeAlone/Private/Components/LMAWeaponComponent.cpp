@@ -53,8 +53,7 @@ void ULMAWeaponComponent::SpawnWeapon()
 			FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
 			Weapon->AttachToComponent(Character->GetMesh(), AttachmentRules, "r_Weapon_Socket");
 
-		//	auto ReloadDelegate = Cast<ULMAWeaponComponent>(ReloadDelegate); 
-		//	ReloadDelegate->ALMABaseWeapon.AddUObject(this, ULMAWeaponComponent::ReloadDelegate);
+			Weapon->OnReload.AddUObject(this, &ULMAWeaponComponent::OnReload);
 		}
 	}
 }
@@ -108,7 +107,12 @@ void ULMAWeaponComponent::OnNotifyReloadFinished(USkeletalMeshComponent* Skeleta
 
 bool ULMAWeaponComponent::CanReload() const
 {
-	return !AnimReloading;	
+	if (Weapon->IsCurrentClipFull())
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Magenta, FString::Printf(TEXT("ClipFull")));
+		return false;
+	}
+	return true;
 }
 
 void ULMAWeaponComponent::Reload()
@@ -122,7 +126,7 @@ void ULMAWeaponComponent::Reload()
 	Character->PlayAnimMontage(ReloadMontage);
 }
 
-void ULMAWeaponComponent::ReloadDelegate() {
+void ULMAWeaponComponent::OnReload() {
 	Reload();
 }
 
