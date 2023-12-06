@@ -17,6 +17,7 @@ class ALMAHealthPickup : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ALMAHealthPickup();
+	bool GivePickup(ALMADefaultCharacter* Character);
 
 protected:
 	// Called when the game starts or when spawned
@@ -33,12 +34,13 @@ protected:
 	
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	bool GivePickup(ALMADefaultCharacter* Character);
+	
 	void PickupWasTaken();
 	void RespawnPickup();
 };

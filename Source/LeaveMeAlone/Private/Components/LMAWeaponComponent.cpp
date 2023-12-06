@@ -109,7 +109,7 @@ bool ULMAWeaponComponent::CanReload() const
 {
 	if (Weapon->IsCurrentClipFull())
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Magenta, FString::Printf(TEXT("ClipFull")));
+	//	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Magenta, FString::Printf(TEXT("ClipFull")));
 		return false;
 	}
 	return true;

@@ -7,8 +7,13 @@
 #include "LMABaseWeapon.generated.h"
 
 class USkeletalMeshComponent;
+class USoundWave;
+class UNiagaraSystem;
+
 
 DECLARE_MULTICAST_DELEGATE(FOnReload)
+
+
 
 USTRUCT(BlueprintType)
 struct FAmmoWeapon
@@ -48,6 +53,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	float FireRate = 0.1;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+	USoundWave* ShootWave;
 
 	FTimerHandle FireDelayTimerHandle;
 	void Shoot();
@@ -56,6 +64,11 @@ public:
 	bool IsCurrentClipEmpty() const;
 	bool IsCurrentClipFull() const;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+	UNiagaraSystem* TraceEffect;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+	FString TraceName = "Tracer";
+	void SpawnTrace(const FVector& TraceStart, const FVector& TraceEnd);
 
 protected:
 	// Called when the game starts or when spawned
