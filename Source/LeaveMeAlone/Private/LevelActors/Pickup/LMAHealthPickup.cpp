@@ -13,7 +13,7 @@ ALMAHealthPickup::ALMAHealthPickup()
 	PrimaryActorTick.bCanEverTick = true;
 
 	SphereComponent = CreateDefaultSubobject<USphereComponent>("SphereComponent");
-	SphereComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+//	SphereComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	SphereComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 	SetRootComponent(SphereComponent);
 }

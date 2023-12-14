@@ -47,6 +47,23 @@ void ALMABaseWeapon::SpawnTrace(const FVector& TraceStart, const FVector& TraceE
 		}
 }
 
+void ALMABaseWeapon::MakeDamage(const FHitResult& HitResult)
+{
+		const auto Zombie = HitResult.GetActor();
+		if (!Zombie)
+			return;
+
+		const auto Pawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+		if (!Pawn)
+			return;
+
+		const auto Controller = Pawn->GetController<APlayerController>();
+		if (!Controller)
+			return;
+
+		Zombie->TakeDamage(Damage, FDamageEvent(), Controller, this);
+}
+
 void ALMABaseWeapon::Shoot()
 {
 	const FTransform SocketTransform = WeaponComponent->GetSocketTransform("Muzzle");
@@ -60,6 +77,7 @@ void ALMABaseWeapon::Shoot()
 	FVector TracerEnd = TraceEnd;
 	if (HitResult.bBlockingHit)
 	{
+		MakeDamage(HitResult);
 		TracerEnd = HitResult.ImpactPoint;
 	}
 	SpawnTrace(TraceStart, TracerEnd);

@@ -17,7 +17,7 @@ class ALMAHealthPickup : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ALMAHealthPickup();
-	bool GivePickup(ALMADefaultCharacter* Character);
+	
 
 protected:
 	// Called when the game starts or when spawned
@@ -27,7 +27,7 @@ protected:
 	USphereComponent* SphereComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup")
-	float RespawnTime = 5.0f;
+	float RespawnTime = 15.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup", meta = (ClampMin = 5.0f, ClampMax = 100.0f))
 	float HealthFromPickup = 100.0f;
@@ -40,7 +40,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	
+	bool GivePickup(ALMADefaultCharacter* Character);
 	void PickupWasTaken();
 	void RespawnPickup();
 };

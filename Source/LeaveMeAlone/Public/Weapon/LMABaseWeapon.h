@@ -70,6 +70,10 @@ public:
 	FString TraceName = "Tracer";
 	void SpawnTrace(const FVector& TraceStart, const FVector& TraceEnd);
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+	float Damage = 20;
+	void MakeDamage(const FHitResult& HitResult);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
