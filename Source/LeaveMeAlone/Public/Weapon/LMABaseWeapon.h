@@ -44,8 +44,6 @@ public:
 	
 	void ChangeClip();
 
-	void AnimReload();
-
 	FAmmoWeapon GetCurrentAmmoWeapon() const { return CurrentAmmoWeapon; }
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
@@ -83,7 +81,6 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	float TraceDistance = 800.0f;
-
 	
 	void DecrementBullets();
 

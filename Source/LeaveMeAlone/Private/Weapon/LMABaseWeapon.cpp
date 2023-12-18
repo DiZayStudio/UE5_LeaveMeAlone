@@ -75,6 +75,7 @@ void ALMABaseWeapon::Shoot()
 	FHitResult HitResult;
 	GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility);
 	FVector TracerEnd = TraceEnd;
+
 	if (HitResult.bBlockingHit)
 	{
 		MakeDamage(HitResult);
@@ -89,7 +90,7 @@ void ALMABaseWeapon::Shoot()
 void ALMABaseWeapon::DecrementBullets()
 {
 	CurrentAmmoWeapon.Bullets--;
-	UE_LOG(LogWeapon, Display, TEXT("Bullets = %s"), *FString::FromInt(CurrentAmmoWeapon.Bullets));
+//	UE_LOG(LogWeapon, Display, TEXT("Bullets = %s"), *FString::FromInt(CurrentAmmoWeapon.Bullets));
 
 	if (IsCurrentClipEmpty())
 	{
@@ -113,13 +114,8 @@ bool ALMABaseWeapon::IsCurrentClipFull() const
 
 void ALMABaseWeapon::ChangeClip()
 {
-	//
-
 	CurrentAmmoWeapon.Bullets = AmmoWeapon.Bullets;
 }
 
-void ALMABaseWeapon::AnimReload() {
-
-}
 
 

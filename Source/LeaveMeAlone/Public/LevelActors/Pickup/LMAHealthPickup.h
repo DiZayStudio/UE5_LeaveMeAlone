@@ -32,15 +32,16 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup", meta = (ClampMin = 5.0f, ClampMax = 100.0f))
 	float HealthFromPickup = 100.0f;
 	
-	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
+	bool GivePickup(ALMADefaultCharacter* Character);
 
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 
 private:
-	bool GivePickup(ALMADefaultCharacter* Character);
+	
 	void PickupWasTaken();
 	void RespawnPickup();
 };

@@ -113,7 +113,7 @@ void ALMADefaultCharacter::MoveRight(float Value)
 
 void ALMADefaultCharacter::Zoom(float Value)
 {
-	UE_LOG(LogTemp, Display, TEXT("Zoom %f"), Value);
+//	UE_LOG(LogTemp, Display, TEXT("Zoom %f"), Value);
 	
 	float& ArmLen = SpringArmComponent->TargetArmLength;
 
