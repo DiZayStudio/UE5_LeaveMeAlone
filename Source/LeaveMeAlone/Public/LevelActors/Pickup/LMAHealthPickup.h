@@ -30,7 +30,7 @@ protected:
 	float RespawnTime = 15.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup", meta = (ClampMin = 5.0f, ClampMax = 100.0f))
-	float HealthFromPickup = 100.0f;
+	float HealthFromPickup = 50.0f;
 	
 	bool GivePickup(ALMADefaultCharacter* Character);
 

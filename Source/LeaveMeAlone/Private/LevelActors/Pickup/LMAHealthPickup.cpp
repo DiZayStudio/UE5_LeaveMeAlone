@@ -1,6 +1,5 @@
 // LeaveMeAlone Game by Netologiya. All RightsReserved.
 
-
 #include "LevelActors/Pickup/LMAHealthPickup.h"
 #include "Components/LMAHealthComponent.h"
 #include "Components/SphereComponent.h"
@@ -13,7 +12,7 @@ ALMAHealthPickup::ALMAHealthPickup()
 	PrimaryActorTick.bCanEverTick = true;
 
 	SphereComponent = CreateDefaultSubobject<USphereComponent>("SphereComponent");
-//	SphereComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	SphereComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	SphereComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 	SetRootComponent(SphereComponent);
 }
@@ -21,8 +20,7 @@ ALMAHealthPickup::ALMAHealthPickup()
 // Called when the game starts or when spawned
 void ALMAHealthPickup::BeginPlay()
 {
-	Super::BeginPlay();
-	
+	Super::BeginPlay();	
 }
 
 // Called every frame
